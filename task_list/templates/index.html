@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div align="center">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ add_task.name.label }}<br>
+        {{ add_task.name }}
+        <br>
+        {{ add_task.about.label }}<br>
+        {{ add_task.about }}
+        <br>
+        {{ add_task.image }}
+        <br>
+        {{ add_task.expiration_date.label }}<br>
+        {{ add_task.expiration_date}}
+        <br>
+        {{ add_task.status.label }}
+        {{ add_task.status }}
+        <br>
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+{% endblock %}

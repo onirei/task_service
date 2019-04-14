@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <table border="1" width="80%" align="center">
+        <tr>
+            <th><a href="?page={{ tasks.number }}&order_by=name">Название</a></th>
+            <th><a href="?page={{ tasks.number }}&order_by=create_date">Дата создания</a></th>
+            <th><a href="?page={{ tasks.number }}&order_by=expiration_date">Дата завершения</a></th>
+            <th><a href="?page={{ tasks.number }}&order_by=status">Статус</a></th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                {% csrf_token %}
+                <td><a href="/task/{{ task.id }}">{{ task.name }}</a></td>
+                <td>{{ task.create_date }}</td>
+                <td>{{ task.expiration_date }}</td>
+                <td>{{ task.status }}</td>
+                <td><a href="/change/{{ task.id }}">Изменить</a>
+                    <a href="/delete/{{ task.id }}" >Удалить</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+
+
+
+<div id="pages" align="center">
+        {% if tasks.has_previous %}
+            <a href="?page={{ tasks.previous_page_number }}&order_by={{ order }}">Previous</a>
+        {% endif %}
+    <span class="current">
+        Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}.
+    </span>
+        {% if tasks.has_next %}
+            <a href="?page={{ tasks.next_page_number }}&order_by={{ order }}">Next</a>
+        {% endif %}
+    </div>
+
+
+
+{% endblock %}

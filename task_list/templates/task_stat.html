@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div align="center">
+    <h3>Всего заданий: {{ tasks.all_tasks }}</h3>
+    <h3>Заданий со статусом Open: {{ tasks.open_tasks }}</h3>
+    <h3>Заданий со статусом Needs offer: {{ tasks.needs_offer_tasks }}</h3>
+    <h3>Заданий со статусом Offered: {{ tasks.offered_tasks }}</h3>
+    <h3>Заданий со статусом Approved: {{ tasks.approved_tasks }}</h3>
+    <h3>Заданий со статусом In progress: {{ tasks.in_progress_tasks }}</h3>
+    <h3>Заданий со статусом Ready: {{ tasks.ready_tasks }}</h3>
+    <h3>Заданий со статусом Verified: {{ tasks.verified_tasks }}</h3>
+    <h3>Заданий со статусом Closed: {{ tasks.closed_tasks }}</h3>
+    <h3>Заданий с истёкшим сроком : {{ tasks.after_expiration_date }}</h3>
+</div>
+{% endblock %}

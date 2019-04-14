@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div>
+        <h2>{{ task.name }}</h2>
+        <p>{{ task.about|linebreaksbr }}</p>
+        <p>create date: {{ task.create_date }}</p>
+        <p>expiration date: {{ task.expiration_date }}</p>
+        <p>status: {{ task.status }}</p>
+        {% if task.image  %}
+            <p> <a href="{{ task.image.url }}"><img src="{{ task.image.url }}" style="width: 200px"></a></p>
+        {% endif %}
+    </div>
+{% endblock %}

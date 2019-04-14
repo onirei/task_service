@@ -1,0 +1,6 @@
+*.pyc
+*~
+/static
+.DS_Store
+sandbox.py
+.idea/
