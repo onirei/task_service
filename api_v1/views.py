@@ -26,7 +26,7 @@ class SnippetList(APIView):
     def post(self, request,  *args, format=None,  **kwargs):
         try:
             snippet = Task()
-            if request.data['img_file']:
+            if request.data['img_file'] and request.data['img_file'] != '':
                 snippet.image = 'img/'+request.data['img_file']
             serializer = TaskSerializer(snippet, data=request.data)
         except MultiValueDictKeyError:
@@ -53,7 +53,7 @@ class SnippetDetail(APIView):
     def put(self, request, pk, format=None):
         snippet = self.get_object(pk)
         try:
-            if request.data['img_file']:
+            if request.data['img_file'] and request.data['img_file'] != '':
                 snippet.image = 'img/'+request.data['img_file']
         except MultiValueDictKeyError:
             pass
