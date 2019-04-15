@@ -3,14 +3,13 @@
 {% block content %}
     <table border="1" width="80%" align="center">
         <tr>
-            <th><a href="?page={{ tasks.number }}&order_by=name">Название</a></th>
-            <th><a href="?page={{ tasks.number }}&order_by=create_date">Дата создания</a></th>
-            <th><a href="?page={{ tasks.number }}&order_by=expiration_date">Дата завершения</a></th>
-            <th><a href="?page={{ tasks.number }}&order_by=status">Статус</a></th>
+            <th>Название <a href="?page={{ tasks.number }}&order_by=name">&darr;</a>&nbsp;<a href="?page={{ tasks.number }}&order_by=-name">&uarr;</a></th>
+            <th>Дата создания<a href="?page={{ tasks.number }}&order_by=create_date">&darr;</a><a href="?page={{ tasks.number }}&order_by=-create_date">&uarr;</a></th>
+            <th>Дата завершения<a href="?page={{ tasks.number }}&order_by=expiration_date">&darr;</a><a href="?page={{ tasks.number }}&order_by=-expiration_date">&uarr;</a></th>
+            <th>Статус<a href="?page={{ tasks.number }}&order_by=status">&darr;</a><a href="?page={{ tasks.number }}&order_by=-status">&uarr;</a></th>
         </tr>
         {% for task in tasks %}
             <tr>
-                {% csrf_token %}
                 <td><a href="/task/{{ task.id }}">{{ task.name }}</a></td>
                 <td>{{ task.create_date }}</td>
                 <td>{{ task.expiration_date }}</td>

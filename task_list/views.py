@@ -9,6 +9,7 @@ from .models import Task
 #отображение всех записей, пангинация
 def task_list(request):
     order = request.GET.get('order_by')
+
     if not order:
         order = 'id'
     tasks_list = Task.objects.all().order_by(order)
