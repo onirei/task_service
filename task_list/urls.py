@@ -1,7 +1,7 @@
 from django.conf.urls import url
-from task_list import views
 from django.conf.urls.static import static
 from django.conf import settings
+from task_list import views
 
 
 urlpatterns = [
@@ -12,4 +12,3 @@ urlpatterns = [
     url(r'^delete/(\d+)$', views.del_task, name='del_task'),
     url(r'^task_stat/$', views.task_stat, name='task_stat'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

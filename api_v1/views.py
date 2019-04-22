@@ -1,13 +1,15 @@
-from task_list.models import Task
+import random
+import string
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import TaskSerializer
-import random
-import string
+from task_list.models import Task
+
 
 from django.utils.datastructures import MultiValueDictKeyError
+
 
 class SnippetList(APIView):
 
@@ -38,8 +40,8 @@ class SnippetList(APIView):
 
 
 class SnippetDetail(APIView):
-
-    def get_object(self, pk):
+    @staticmethod
+    def get_object(pk):
         try:
             return Task.objects.get(pk=pk)
         except Task.DoesNotExist:
@@ -72,10 +74,13 @@ class SnippetDetail(APIView):
 class FileUploadView(APIView):
     def post(self, request, fileformat, format=None):
         f = self.request.FILES.get('file')
-        name = ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for x in range(32))
+        name = ''.join(random.choice(
+            string.ascii_uppercase +
+            string.ascii_lowercase +
+            string.digits
+        ) for x in range(32))
         filename = 'media/img/'+name+'.'+fileformat
         with open(filename, 'bw') as file:
             for chunk in f.chunks():
                 file.write(chunk)
-
         return Response(name+'.'+fileformat, status=status.HTTP_201_CREATED)

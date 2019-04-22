@@ -6,7 +6,7 @@ from .forms import CreateTask
 from .models import Task
 
 
-#отображение всех записей, пангинация
+# Отображение всех записей, пангинация
 def task_list(request):
     order = request.GET.get('order_by')
 
@@ -21,20 +21,24 @@ def task_list(request):
         tasks = paginator.page(1)
     except EmptyPage:
         tasks = paginator.page(paginator.num_pages)
-    return render_to_response('task_list.html', {'tasks': tasks, 'order': order})
+    return render_to_response('task_list.html', {'tasks': tasks,
+                                                 'order': order})
 
-#отображение одной записи
+
+# Отображение одной записи
 def task(request, task_id):
     task_obj = Task.objects.get(id=task_id)
     return render(request, 'task.html', {'task': task_obj})
 
-#удаление записи
+
+# Удаление записи
 def del_task(request, task_id):
     task_obj = Task.objects.get(id=task_id)
     task_obj.delete()
     return HttpResponseRedirect('/task_list')
 
-#изменение записи
+
+# Изменение записи
 def change_task(request, task_id):
     task_obj = Task.objects.get(id=task_id)
     if request.POST:
@@ -49,10 +53,17 @@ def change_task(request, task_id):
             task_obj.save()
             return HttpResponseRedirect('/task_list')
     else:
-        chn_task = CreateTask(initial={'name':task_obj.name, 'about':task_obj.about, 'image':task_obj.image, 'expiration_date':task_obj.expiration_date, 'status':task_obj.status})
+        chn_task = CreateTask(initial={
+            'name': task_obj.name,
+            'about': task_obj.about,
+            'image': task_obj.image,
+            'expiration_date': task_obj.expiration_date,
+            'status': task_obj.status
+            })
     return render(request, 'index.html', {'add_task': chn_task})
 
-#создание записи
+
+# Создание записи
 def create_task(request):
     if request.POST:
         add_task = CreateTask(request.POST, request.FILES)
@@ -69,20 +80,20 @@ def create_task(request):
         add_task = CreateTask()
     return render(request, 'index.html', {'add_task': add_task})
 
-#статистика
+
+# Статистика
 def task_stat(request):
     tasks = dict(
-        all_tasks = Task.objects.all().count(),
-        open_tasks = Task.objects.filter(status='Open').count(),
-        needs_offer_tasks = Task.objects.filter(status='Needs offer').count(),
-        offered_tasks = Task.objects.filter(status='Offered').count(),
-        approved_tasks = Task.objects.filter(status='Approved').count(),
-        in_progress_tasks = Task.objects.filter(status='In progress').count(),
-        ready_tasks = Task.objects.filter(status='Ready').count(),
-        verified_tasks = Task.objects.filter(status='Verified').count(),
-        closed_tasks = Task.objects.filter(status='Closed').count(),
-        after_expiration_date = Task.objects.filter(expiration_date__lte=date.today()).count(),
+        all_tasks=Task.objects.all().count(),
+        open_tasks=Task.objects.filter(status='Open').count(),
+        needs_offer_tasks=Task.objects.filter(status='Needs offer').count(),
+        offered_tasks=Task.objects.filter(status='Offered').count(),
+        approved_tasks=Task.objects.filter(status='Approved').count(),
+        in_progress_tasks=Task.objects.filter(status='In progress').count(),
+        ready_tasks=Task.objects.filter(status='Ready').count(),
+        verified_tasks=Task.objects.filter(status='Verified').count(),
+        closed_tasks=Task.objects.filter(status='Closed').count(),
+        after_expiration_date=Task.objects.filter(
+            expiration_date__lte=date.today()).count(),
     )
     return render(request, 'task_stat.html', {'tasks': tasks})
-
-
